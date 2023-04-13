@@ -9,7 +9,7 @@ public class UsrHomeController {
 	
 	private int count = 0;
 	
-	UsrHomeController() {
+	public UsrHomeController() {
 		count = 0;
 	}
 	
@@ -37,5 +37,12 @@ public class UsrHomeController {
 	@ResponseBody
 	public int showMain4() {
 		return count++;
+	}
+	
+	@RequestMapping("/usr/home/main5")
+	@ResponseBody
+	public String showMain5() {
+		count = 0;
+		return "count의 값이 0으로 초기화됩니다.";
 	}
 }
