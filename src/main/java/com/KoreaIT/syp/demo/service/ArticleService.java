@@ -23,7 +23,6 @@ public class ArticleService {
 		articleRepository.writeArticle(title, body);
 		
 		return articleRepository.getLastInsertId();
-
 	}
 
 	public Article getArticle(int id) {
