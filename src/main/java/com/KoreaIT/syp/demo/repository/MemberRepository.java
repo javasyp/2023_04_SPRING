@@ -32,4 +32,12 @@ public interface MemberRepository {
 	@Select("SELECT LAST_INSERT_ID()")
 	int getLastInsertId();
 	
+	// 아이디 중복 체크
+	@Select("""
+			SELECT *
+			FROM `member`
+			WHERE loginId = #{loginId}
+			""")
+	Member getMemberByLoginId(String loginId);
+	
 }
