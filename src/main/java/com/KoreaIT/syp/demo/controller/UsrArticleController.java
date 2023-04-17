@@ -35,7 +35,7 @@ public class UsrArticleController {
 	// 입력한 Id값과 article의 Id값 일치하는지?
 	private Article getArticle(int id) {
 		for (Article article : articles) {
-			if (article.getId() == id) {
+			if (article.getId() == id) {	// getter 메소드
 				return article;
 			}
 		}
@@ -50,8 +50,8 @@ public class UsrArticleController {
 	private void modifyArticle(int id, String title, String body) {
 		Article article = getArticle(id);
 
-		article.setTitle(title);
-		article.setBody(body);
+		article.setTitle(title);	// setter 메소드
+		article.setBody(body);		// setter 메소드
 	}
 	// 작성
 	public Article writeArticle(String title, String body) {
@@ -68,7 +68,7 @@ public class UsrArticleController {
 	// 수정
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(int id, String title, String body) {
+	public Object doModify(int id, String title, String body) {		// Object
 		Article article = getArticle(id);
 		if (article == null) {
 			return id + "번 글은 존재하지 않습니다";
@@ -76,7 +76,7 @@ public class UsrArticleController {
 
 		modifyArticle(id, title, body);
 
-		return id + "번 글을 수정했습니다";
+		return article;
 	}
 	// 삭제
 	@RequestMapping("/usr/article/doDelete")
@@ -84,12 +84,12 @@ public class UsrArticleController {
 	public String doDelete(int id) {
 		Article article = getArticle(id);
 		if (article == null) {
-			return id + "번 글은 존재하지 않습니다";
+			return id + "번 글은 존재하지 않습니다.";
 		}
 
 		deleteArticle(id);
 
-		return id + "번 글을 삭제했습니다";
+		return id + "번 글을 삭제했습니다.";
 	}
 	// 작성
 	@RequestMapping("/usr/article/doAdd")
@@ -106,5 +106,18 @@ public class UsrArticleController {
 	public List<Article> getArticles() {
 		
 		return articles;
+	}
+	// 상세보기
+	@RequestMapping("/usr/article/getArticle")
+	@ResponseBody
+	public Object getArticleAction(int id) {		// Object
+
+		Article article = getArticle(id);
+
+		if (article == null) {
+			return id + "번 글은 존재하지 않습니다";
+		}
+
+		return article;
 	}
 }
