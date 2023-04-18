@@ -31,8 +31,6 @@ updateDate = NOW(),
 title = '제목 3',
 `body` = '내용 3';
 
-SELECT * FROM article;
-
 SELECT LAST_INSERT_ID();
 
 # 회원 테이블 생성
@@ -84,4 +82,18 @@ nickname = '회원2',
 cellphoneNum = '01067896789',
 email = 'zxcv@gmail.com';
 
+# 게시물 테이블 구조 변경 - memberId 추가
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
+UPDATE article 
+SET memberId = 2
+WHERE id IN(1,2);
+
+UPDATE article 
+SET memberId = 3
+WHERE id = 3;
+
+###################################################################
+
+SELECT * FROM article;
 SELECT * FROM `member`;

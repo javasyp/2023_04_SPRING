@@ -55,7 +55,7 @@ public class UsrMemberController {
 		
 		session.setAttribute("loginedMemberId", member.getId());
 		
-		return ResultData.from("S-1", Ut.f("%s 님 환영합니다.", member.getName()), member);
+		return ResultData.from("S-1", Ut.f("%s 님 환영합니다.", member.getName()));
 	}
 	
 	// 로그아웃

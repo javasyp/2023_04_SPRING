@@ -2,6 +2,8 @@ package com.KoreaIT.syp.demo.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,18 +51,30 @@ public class UsrArticleController {
 	// 작성
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public ResultData<Article> doWrite(String title, String body) {		// 제네릭 추가
+	public ResultData<Article> doWrite(HttpSession session, String title, String body) {		// 제네릭 추가
+		
+		boolean isLogined = false;
+		int loginedMemberId = 0;
+		
+		// 로그인되어 있을 때
+		if (session.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		}
+		// 로그아웃 상태일 때
+		if (isLogined == false) {
+			return ResultData.from("F-A", "로그인 후 이용해 주세요.");
+		}
 		
 		if (Ut.empty(title)) {
 			return ResultData.from("F-1", "제목을 입력해 주세요.");
 		}
 		
 		if (Ut.empty(body)) {
-			return ResultData.from("F-1", "내용을 입력해 주세요.");
+			return ResultData.from("F-2", "내용을 입력해 주세요.");
 		}
 		
-		// 서비스에서 처리한 내용 뿌려주기
-		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body);
+		ResultData<Integer> writeArticleRd = articleService.writeArticle(loginedMemberId, title, body);
 		
 		int id = (int) writeArticleRd.getData1();
 
