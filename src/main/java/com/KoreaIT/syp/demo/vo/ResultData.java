@@ -35,8 +35,7 @@ public class ResultData<DT> {			// 제네릭 추가
 		return isSuccess() == false;
 	}
 	
-	// 회원가입 성공 시
-	public static <DT> ResultData<DT> newData(ResultData joinRd, DT newData) {
-		return from(joinRd.getResultCode(), joinRd.getMsg(), newData);
+	public static <DT> ResultData<DT> newData(ResultData rd, DT newData) {
+		return from(rd.getResultCode(), rd.getMsg(), newData);
 	}
 }

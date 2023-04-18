@@ -2,7 +2,6 @@ package com.KoreaIT.syp.demo.controller;
 
 import org.springframework.stereotype.Controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.syp.demo.service.MemberService;
 import com.KoreaIT.syp.demo.util.Ut;
-import com.KoreaIT.syp.demo.vo.Article;
 import com.KoreaIT.syp.demo.vo.Member;
 import com.KoreaIT.syp.demo.vo.ResultData;
 
@@ -28,7 +26,7 @@ public class UsrMemberController {
 		
 		boolean isLogined = false;
 		
-		// 로그인 상태일 때
+		// 중복 로그인 방지
 		if (session.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 		}
@@ -58,6 +56,27 @@ public class UsrMemberController {
 		session.setAttribute("loginedMemberId", member.getId());
 		
 		return ResultData.from("S-1", Ut.f("%s 님 환영합니다.", member.getName()), member);
+	}
+	
+	// 로그아웃
+	@RequestMapping("/usr/member/doLogout")
+	@ResponseBody
+	public ResultData doLogout(HttpSession session) throws Exception {
+		
+		boolean isLogined = false;
+		
+		// 중복 로그아웃 방지
+		if (session.getAttribute("loginedMemberId") == null) {
+			isLogined = true;
+		}
+
+		if (isLogined) {
+			return ResultData.from("F-5", "현재 로그아웃 상태입니다.");
+		}
+		
+		session.removeAttribute("loginedMemberId");
+		
+		return ResultData.from("S-1", "로그아웃 되었습니다.");
 	}
 	
 	// 회원가입
