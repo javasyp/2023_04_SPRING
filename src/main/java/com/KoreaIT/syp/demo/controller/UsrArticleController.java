@@ -21,29 +21,29 @@ public class UsrArticleController {
 	// 수정
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public Object doModify(int id, String title, String body) {		// Object
+	public ResultData<Integer> doModify(int id, String title, String body) {		// Object -> ResultData, 제네릭 추가
 		Article article = articleService.getArticle(id);
 		if (article == null) {
-			return id + "번 글은 존재하지 않습니다";
+			return ResultData.from("F-1", Ut.f("%d번 글은 존재하지 않습니다.", id), id);
 		}
 
 		articleService.modifyArticle(id, title, body);
 
-		return article;
+		return ResultData.from("F-1", Ut.f("%d번 글을 수정했습니다.", id), id);
 	}
 	
 	// 삭제
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public String doDelete(int id) {
+	public ResultData<Integer> doDelete(int id) {		// String -> ResultData, 제네릭 추가
 		Article article = articleService.getArticle(id);
 		if (article == null) {
-			return id + "번 글은 존재하지 않습니다.";
+			return ResultData.from("F-1", Ut.f("%d번 글은 존재하지 않습니다.", id), id);
 		}
 
 		articleService.deleteArticle(id);
 
-		return id + "번 글을 삭제했습니다.";
+		return ResultData.from("F-1", Ut.f("%d번 글을 삭제했습니다.", id), id);
 	}
 	
 	// 작성
