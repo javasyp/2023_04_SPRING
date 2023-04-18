@@ -3,7 +3,9 @@ package com.KoreaIT.syp.demo.service;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.syp.demo.repository.MemberRepository;
+import com.KoreaIT.syp.demo.util.Ut;
 import com.KoreaIT.syp.demo.vo.Member;
+import com.KoreaIT.syp.demo.vo.ResultData;
 
 @Service
 public class MemberService {
@@ -14,25 +16,29 @@ public class MemberService {
 	}
 	
 	// 서비스 메서드
-	public int join(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+	public ResultData join(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {		// int -> ResultData
 		
 		// 아이디 중복 체크
 		Member existsMember = getMemberByLoginId(loginId);
 
 		if (existsMember != null) {
-			return -1;
+			return ResultData.from("F-7", Ut.f("이미 사용 중인 아이디(%s)입니다.", loginId));
 		}
 		
 		// 이름 + 이메일 중복 체크
 		existsMember = getMemberByNameAndEmail(name, email);
 
 		if (existsMember != null) {
-			return -2;
+			return ResultData.from("F-8", Ut.f("이미 사용 중인 이름(%s)과 이메일(%s)입니다.", name, email));
 		}
 		
+		// select문 실행
 		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 		
-		return memberRepository.getLastInsertId();
+		// 몇 번째 회원인지
+		int id = memberRepository.getLastInsertId();
+		
+		return ResultData.from("S-1", "회원가입이 완료되었습니다.", id);
 	}
 	
 	// 이름 + 이메일 중복 체크

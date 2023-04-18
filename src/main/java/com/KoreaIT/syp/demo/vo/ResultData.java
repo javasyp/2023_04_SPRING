@@ -36,4 +36,9 @@ public class ResultData {
 	public boolean isFail() {			// fail 객체 내부 데이터 생성됨
 		return isSuccess() == false;
 	}
+	
+	// 회원가입 성공 시
+	public static ResultData newData(ResultData joinRd, Object newData) {
+		return from(joinRd.getResultCode(), joinRd.getMsg(), joinRd.getData1());
+	}
 }
