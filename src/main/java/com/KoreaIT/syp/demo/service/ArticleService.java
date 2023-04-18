@@ -21,7 +21,7 @@ public class ArticleService {
 	}
 	
 	// 서비스 메서드
-	public ResultData writeArticle(String title, String body) {		// int -> ResultData
+	public ResultData<Integer> writeArticle(String title, String body) {		// 제네릭 추가
 		// 서비스에서 ResultData로 처리
 		articleRepository.writeArticle(title, body);
 		

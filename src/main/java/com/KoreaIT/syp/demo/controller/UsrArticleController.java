@@ -17,10 +17,6 @@ public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
 	
-//	public UsrArticleController() {
-//		articleService = new ArticleService();	// @Autowired 사용 시 필요없음.
-//	}
-	
 	// 액션 메서드
 	// 수정
 	@RequestMapping("/usr/article/doModify")
@@ -53,7 +49,7 @@ public class UsrArticleController {
 	// 작성
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public ResultData doWrite(String title, String body) {		// Article -> ResultData
+	public ResultData<Article> doWrite(String title, String body) {		// 제네릭 추가
 		
 		if (Ut.empty(title)) {
 			return ResultData.from("F-1", "제목을 입력해 주세요.");
@@ -64,7 +60,7 @@ public class UsrArticleController {
 		}
 		
 		// 서비스에서 처리한 내용 뿌려주기
-		ResultData writeArticleRd = articleService.writeArticle(title, body);
+		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body);
 		
 		int id = (int) writeArticleRd.getData1();
 
@@ -76,7 +72,7 @@ public class UsrArticleController {
 	// 목록
 	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
-	public ResultData getArticles() {		// List<Article> -> ResultData
+	public ResultData<List<Article>> getArticles() {		// 제네릭 추가
 		
 		List<Article> articles = articleService.articles();
 		
@@ -86,7 +82,7 @@ public class UsrArticleController {
 	// 상세보기
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-	public ResultData getArticle(int id) {		// Object -> ResultData
+	public ResultData<Article> getArticle(int id) {		// 제네릭 추가
 
 		Article article = articleService.getArticle(id);
 

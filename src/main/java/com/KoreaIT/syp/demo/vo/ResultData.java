@@ -2,24 +2,22 @@ package com.KoreaIT.syp.demo.vo;
 
 import lombok.Getter;
 
-public class ResultData {
+public class ResultData<DT> {			// 제네릭 추가
 	@Getter
-	private String resultCode;		// S-1 또는 F-1
+	private String resultCode;
 	@Getter
-	private String msg;		// 성공 또는 실패 메시지
+	private String msg;
 	@Getter
-	private Object data1;		// 데이터 (article 또는 member)
-//	boolean success;		// isSuccess()
-//	boolean fail;			// isFail()
+	private DT data1;
 	
 	// data1(article) 없을 때, 오버로딩
-	public static ResultData from(String resultCode, String msg) {
+	public static <DT> ResultData<DT> from(String resultCode, String msg) {
 		return from(resultCode, msg, null);
 	}
 	
 	// 객체 생성해서 만족하는 데이터 있을 때
-	public static ResultData from(String resultCode, String msg, Object data1) {
-		ResultData rd = new ResultData();
+	public static <DT> ResultData<DT> from(String resultCode, String msg, DT data1) {
+		ResultData<DT> rd = new ResultData<DT>();
 		rd.resultCode = resultCode;
 		rd.msg = msg;		
 		rd.data1 = data1;
@@ -38,7 +36,7 @@ public class ResultData {
 	}
 	
 	// 회원가입 성공 시
-	public static ResultData newData(ResultData joinRd, Object newData) {
-		return from(joinRd.getResultCode(), joinRd.getMsg(), joinRd.getData1());
+	public static <DT> ResultData<DT> newData(ResultData joinRd, DT newData) {
+		return from(joinRd.getResultCode(), joinRd.getMsg(), newData);
 	}
 }

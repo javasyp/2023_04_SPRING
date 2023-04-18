@@ -14,13 +14,14 @@ import com.KoreaIT.syp.demo.vo.ResultData;
 public class UsrMemberController {
 	@Autowired
 	private MemberService memberService;
-	
+
 	// 액션 메서드
 	// 회원가입
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public ResultData doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {		// Ojbect -> ResultData
-		
+	public ResultData<Member> doJoin(String loginId, String loginPw,
+			String name, String nickname, String cellphoneNum, String email) { // 제네릭 추가
+
 		if (Ut.empty(loginId)) {
 			return ResultData.from("F-1", "아이디를 입력해 주세요.");
 		}
@@ -39,17 +40,18 @@ public class UsrMemberController {
 		if (Ut.empty(email)) {
 			return ResultData.from("F-6", "이메일을 입력해 주세요.");
 		}
-		
-		ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
-		
+
+		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name,
+				nickname, cellphoneNum, email);
+
 		// 중복일 때
 		if (joinRd.isFail()) {
-			return joinRd;
+			return (ResultData) joinRd;
 		}
-		
-		// joinRd에 저장된 data1(id) 값 -> int로 형변환
-		Member member = memberService.getMemberById((int) joinRd.getData1());
-		
+
+		// joinRd에 저장된 data1(id) 값
+		Member member = memberService.getMemberById(joinRd.getData1());
+
 		return ResultData.newData(joinRd, member);
 	}
 }
