@@ -48,7 +48,7 @@ public class MemberService {
 	}
 
 	// 아이디 중복 체크
-	private Member getMemberByLoginId(String loginId) {
+	public Member getMemberByLoginId(String loginId) {
 		return memberRepository.getMemberByLoginId(loginId);
 	}
 
