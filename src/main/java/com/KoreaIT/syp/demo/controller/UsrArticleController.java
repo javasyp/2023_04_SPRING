@@ -23,29 +23,66 @@ public class UsrArticleController {
 	// 수정
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData<Integer> doModify(int id, String title, String body) {		// Object -> ResultData, 제네릭 추가
+	public ResultData<Integer> doModify(HttpSession session, int id, String title, String body) {		// 세션 추가
+		boolean isLogined = false;
+		int loginedMemberId = 0;
+		
+		// 로그인되어 있을 때
+		if (session.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		}
+		// 로그아웃 상태일 때
+		if (isLogined == false) {
+			return ResultData.from("F-A", "로그인 후 이용해 주세요.");
+		}
+		
 		Article article = articleService.getArticle(id);
 		if (article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 글은 존재하지 않습니다.", id), id);
 		}
+		
+		// 권한 체크
+		if (article.getMemberId() == loginedMemberId) {
+			return ResultData.from("F-2", Ut.f("%d번 글에 대한 권한이 없습니다.", id));
+		}
 
 		articleService.modifyArticle(id, title, body);
 
-		return ResultData.from("F-1", Ut.f("%d번 글을 수정했습니다.", id), id);
+		return ResultData.from("S-1", Ut.f("%d번 글을 수정했습니다.", id), id);
 	}
 	
 	// 삭제
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public ResultData<Integer> doDelete(int id) {		// String -> ResultData, 제네릭 추가
+	public ResultData<Integer> doDelete(HttpSession session, int id) {		// 세션 추가
+		boolean isLogined = false;
+		int loginedMemberId = 0;
+		
+		// 로그인되어 있을 때
+		if (session.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		}
+		// 로그아웃 상태일 때
+		if (isLogined == false) {
+			return ResultData.from("F-A", "로그인 후 이용해 주세요.");
+		}
+		
 		Article article = articleService.getArticle(id);
+		
 		if (article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 글은 존재하지 않습니다.", id), id);
+		}
+		
+		// 권한 체크
+		if (article.getMemberId() == loginedMemberId) {
+			return ResultData.from("F-2", Ut.f("%d번 글에 대한 권한이 없습니다.", id));
 		}
 
 		articleService.deleteArticle(id);
 
-		return ResultData.from("F-1", Ut.f("%d번 글을 삭제했습니다.", id), id);
+		return ResultData.from("S-1", Ut.f("%d번 글을 삭제했습니다.", id), id);
 	}
 	
 	// 작성
