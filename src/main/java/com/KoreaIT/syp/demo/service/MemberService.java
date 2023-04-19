@@ -39,7 +39,7 @@ public class MemberService {
 		// 몇 번째 회원인지
 		int id = memberRepository.getLastInsertId();
 
-		return ResultData.from("S-1", "회원가입이 완료되었습니다.", id);
+		return ResultData.from("S-1", "회원가입이 완료되었습니다.", "id", id);
 	}
 
 	// 이름 + 이메일 중복 체크

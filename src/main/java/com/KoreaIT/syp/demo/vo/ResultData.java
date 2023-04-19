@@ -9,17 +9,20 @@ public class ResultData<DT> {			// 제네릭 추가
 	private String msg;
 	@Getter
 	private DT data1;
+	@Getter
+	private String data1Name;
 	
 	// data1(article) 없을 때, 오버로딩
 	public static <DT> ResultData<DT> from(String resultCode, String msg) {
-		return from(resultCode, msg, null);
+		return from(resultCode, msg, null, null);
 	}
 	
 	// 객체 생성해서 만족하는 데이터 있을 때
-	public static <DT> ResultData<DT> from(String resultCode, String msg, DT data1) {
+	public static <DT> ResultData<DT> from(String resultCode, String msg, String data1Name, DT data1) {
 		ResultData<DT> rd = new ResultData<DT>();
 		rd.resultCode = resultCode;
-		rd.msg = msg;		
+		rd.msg = msg;
+		rd.data1Name = data1Name;
 		rd.data1 = data1;
 		
 		return rd;
@@ -35,7 +38,7 @@ public class ResultData<DT> {			// 제네릭 추가
 		return isSuccess() == false;
 	}
 	
-	public static <DT> ResultData<DT> newData(ResultData rd, DT newData) {
-		return from(rd.getResultCode(), rd.getMsg(), newData);
+	public static <DT> ResultData<DT> newData(ResultData rd, String data1Name, DT newData) {
+		return from(rd.getResultCode(), rd.getMsg(), data1Name, newData);
 	}
 }

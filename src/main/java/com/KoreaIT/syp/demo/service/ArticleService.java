@@ -27,7 +27,7 @@ public class ArticleService {
 		
 		int id = articleRepository.getLastInsertId();
 		
-		return ResultData.from("S-1", Ut.f("%d번 글이 생성되었습니다.", id), id);
+		return ResultData.from("S-1", Ut.f("%d번 글이 생성되었습니다.", id), "id", id);
 	}
 
 	public Article getArticle(int id) {
@@ -51,7 +51,7 @@ public class ArticleService {
 		
 		Article article = getArticle(id);
 
-		return ResultData.from("S-1", Ut.f("%d번 글을 수정 했습니다.", id), article);
+		return ResultData.from("S-1", Ut.f("%d번 글을 수정 했습니다.", id), "article", article);
 	}
 	
 	public List<Article> articles() {

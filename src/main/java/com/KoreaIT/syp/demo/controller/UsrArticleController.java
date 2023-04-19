@@ -39,7 +39,7 @@ public class UsrArticleController {
 		
 		Article article = articleService.getArticle(id);
 		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 글은 존재하지 않습니다.", id), id);
+			return ResultData.from("F-1", Ut.f("%d번 글은 존재하지 않습니다.", id), "id", id);
 		}
 		
 		ResultData actorCanModifyRd = articleService.actorCanModify(loginedMemberId, article);
@@ -71,7 +71,7 @@ public class UsrArticleController {
 		Article article = articleService.getArticle(id);
 		
 		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 글은 존재하지 않습니다.", id), id);
+			return ResultData.from("F-1", Ut.f("%d번 글은 존재하지 않습니다.", id), "id", id);
 		}
 		
 		// 권한 체크
@@ -81,7 +81,7 @@ public class UsrArticleController {
 
 		articleService.deleteArticle(id);
 
-		return ResultData.from("S-1", Ut.f("%d번 글을 삭제했습니다.", id), id);
+		return ResultData.from("S-1", Ut.f("%d번 글을 삭제했습니다.", id), "id", id);
 	}
 	
 	// 작성
@@ -116,7 +116,7 @@ public class UsrArticleController {
 
 		Article article = articleService.getArticle(id);
 		
-		return ResultData.newData(writeArticleRd, article);
+		return ResultData.newData(writeArticleRd, "article", article);
 	}
 	
 	// 목록
@@ -126,7 +126,7 @@ public class UsrArticleController {
 		
 		List<Article> articles = articleService.articles();
 		
-		return ResultData.from("S-1", "Article List", articles);
+		return ResultData.from("S-1", "Article List", "List<Article>", articles);
 	}
 	
 	// 상세보기
@@ -140,6 +140,6 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Ut.f("%d번 글은 존재하지 않습니다.", id));
 		}
 
-		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id), article);
+		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id), "article", article);
 	}
 }
