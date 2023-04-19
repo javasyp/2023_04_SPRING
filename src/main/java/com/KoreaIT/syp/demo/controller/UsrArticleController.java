@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -121,12 +122,12 @@ public class UsrArticleController {
 	
 	// 목록
 	@RequestMapping("/usr/article/getArticles")
-	@ResponseBody
-	public ResultData<List<Article>> getArticles() {		// 제네릭 추가
-		
+	public String getArticles(Model model) {
 		List<Article> articles = articleService.articles();
 		
-		return ResultData.from("S-1", "Article List", "List<Article>", articles);
+		model.addAttribute("articles", articles);
+		
+		return "usr/article/list";
 	}
 	
 	// 상세보기
