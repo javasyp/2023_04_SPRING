@@ -5,9 +5,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Article List</title>
+<link rel="stylesheet" href="/resource/common.css" />
+<script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
 	<h1>LIST</h1>
+	
+	<header>
+		<ul>
+			<li>
+				<a href="/">HOME</a>
+			</li>
+			<li>
+				<a href="../article/list">LIST</a>
+			</li>
+		</ul>
+	</header>
 	
 	<hr />
 	<table border="1">
