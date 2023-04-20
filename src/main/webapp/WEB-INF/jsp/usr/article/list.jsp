@@ -20,9 +20,9 @@
 						<td>${article.id }</td>
 						<td>${article.regDate.substring(0,10) }</td>
 						<td>
-							<a href="detail?id=${article.id }">${article.title }</a>
+							<a class="hover: underline" href="detail?id=${article.id }">${article.title }</a>
 						</td>
-						<td>${article.memberId }</td>
+						<td>${article.extra_writer }</td>
 					</tr>
 				</c:forEach>
 			</tbody>
