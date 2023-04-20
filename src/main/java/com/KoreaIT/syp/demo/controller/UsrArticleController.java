@@ -121,8 +121,8 @@ public class UsrArticleController {
 	}
 	
 	// 목록
-	@RequestMapping("/usr/article/getArticles")
-	public String getArticles(Model model) {
+	@RequestMapping("/usr/article/list")
+	public String showList(Model model) {
 		List<Article> articles = articleService.articles();
 		
 		model.addAttribute("articles", articles);
@@ -131,16 +131,13 @@ public class UsrArticleController {
 	}
 	
 	// 상세보기
-	@RequestMapping("/usr/article/getArticle")
-	@ResponseBody
-	public ResultData<Article> getArticle(int id) {		// 제네릭 추가
+	@RequestMapping("/usr/article/detail")
+	public String showDetail(Model model, int id) {
 
 		Article article = articleService.getArticle(id);
+		
+		model.addAttribute("article", article);
 
-		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 글은 존재하지 않습니다.", id));
-		}
-
-		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id), "article", article);
+		return "usr/article/detail";
 	}
 }
