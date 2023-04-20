@@ -12,21 +12,37 @@
 		title = #{title},
 		`body`= #{body}
 	</insert>
-
-	<select id="getArticles" resultType="Article">
+	
+	<!-- 출력용 데이터 -->
+	<select id="getForPrintArticles" resultType="Article">
 		SELECT A.*, M.nickname AS extra_writer
 		FROM article AS A
 		INNER JOIN `member` AS M
 		ON A.memberId = M.id
 		ORDER BY A.id DESC
 	</select>
-
-	<select id="getArticle" resultType="Article">
+	
+	<!-- 순수 데이터 -->
+	<select id="getArticles" resultType="Article">
+		SELECT *
+		FROM article
+		ORDER BY id DESC
+	</select>
+	
+	<!-- 출력용 데이터 -->
+	<select id="getForPrintArticle" resultType="Article">
 		SELECT A.*, M.nickname AS extra_writer
 		FROM article AS A
 		INNER JOIN `member` AS M
 		ON A.memberId = M.id
 		WHERE A.id = #{id}
+	</select>
+	
+	<!-- 순수 데이터 -->
+	<select id="getArticle" resultType="Article">
+		SELECT *
+		FROM article
+		WHERE id = #{id}
 	</select>
 
 	<delete id="deleteArticle">

@@ -123,7 +123,7 @@ public class UsrArticleController {
 	// 목록
 	@RequestMapping("/usr/article/list")
 	public String showList(Model model) {
-		List<Article> articles = articleService.articles();
+		List<Article> articles = articleService.getForPrintArticles();
 		
 		model.addAttribute("articles", articles);
 		
@@ -132,12 +132,18 @@ public class UsrArticleController {
 	
 	// 상세보기
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(Model model, int id) {
+	public String showDetail(HttpSession session, Model model, int id) {
+		int loginedMemberId = 0;
+		
+		// 로그인되어 있을 때
+		if (session.getAttribute("loginedMemberId") != null) {
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		}
 
-		Article article = articleService.getArticle(id);
+		Article article = articleService.getForPrintArticle(loginedMemberId, id);
 		
 		model.addAttribute("article", article);
-
+		
 		return "usr/article/detail";
 	}
 }
