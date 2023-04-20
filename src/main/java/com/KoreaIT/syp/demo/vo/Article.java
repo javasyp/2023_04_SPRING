@@ -16,6 +16,8 @@ public class Article {
 	private String body;
 	
 	private String extra_writer;
-
+	
+	// 수정 및 삭제 권한
 	private boolean actorCanDelete;
+	private boolean actorCanModify;
 }

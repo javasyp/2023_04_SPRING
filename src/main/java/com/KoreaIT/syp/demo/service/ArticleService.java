@@ -21,6 +21,7 @@ public class ArticleService {
 	}
 	
 	// 서비스 메서드
+	// 작성
 	public ResultData<Integer> writeArticle(int memberId, String title, String body) {		// 제네릭 추가
 		// 서비스에서 ResultData로 처리
 		articleRepository.writeArticle(memberId, title, body);
@@ -30,18 +31,12 @@ public class ArticleService {
 		return ResultData.from("S-1", Ut.f("%d번 글이 생성되었습니다.", id), "id", id);
 	}
 	
+	// 삭제
 	public void deleteArticle(int id) {
 		articleRepository.deleteArticle(id);
 	}
 	
-	// doModify 권한 체크
-	public ResultData actorCanModify(int loginedMemberId, Article article) {
-		if (article.getMemberId() != loginedMemberId) {
-			return ResultData.from("F-2", Ut.f("해당 글에 대한 권한이 없습니다."));
-		}
-		return ResultData.from("S-1", "수정 가능");
-	}
-	
+	// 수정
 	public ResultData modifyArticle(int id, String title, String body) {		// void -> ResultData
 		articleRepository.modifyArticle(id, title, body);
 		
@@ -50,34 +45,52 @@ public class ArticleService {
 		return ResultData.from("S-1", Ut.f("%d번 글을 수정 했습니다.", id), "article", article);
 	}
 	
+	// 목록
+	public List<Article> articles() {
+		return articleRepository.getArticles();
+	}
+	
+	// 목록 (출력용)
+	public List<Article> getForPrintArticles() {
+		return articleRepository.getForPrintArticles();
+	}
+	
+	// 상세보기
 	public Article getArticle(int id) {
 		return articleRepository.getArticle(id);
 	}
 	
-	// 출력용
-//	public Article getForPrintArticle(int id) {
-//		return articleRepository.getForPrintArticle(id);
-//	}
-	
-	// 권한 체크
+	// 상세보기 (출력용), 권한 체크
 	public Article getForPrintArticle(int actorId, int id) {
 		Article article = articleRepository.getForPrintArticle(id);
 
-		updateForPrintData(actorId, article);
+		controlForPrintData(actorId, article);
 
 		return article;
 	}
-
-	private void updateForPrintData(int actorId, Article article) {
+	
+	// 수정 및 삭제 버튼 노출 여부
+	private void controlForPrintData(int actorId, Article article) {
 		if (article == null) {
 			return;
 		}
 
 		ResultData actorCanDeleteRd = actorCanDelete(actorId, article);
-		
 		article.setActorCanDelete(actorCanDeleteRd.isSuccess());
+		
+		ResultData actorCanModifyRd = actorCanModify(actorId, article);
+		article.setActorCanModify(actorCanModifyRd.isSuccess());
 	}
-
+	
+	// 수정 권한 체크
+	public ResultData actorCanModify(int loginedMemberId, Article article) {
+		if (article.getMemberId() != loginedMemberId) {
+			return ResultData.from("F-2", Ut.f("해당 글에 대한 권한이 없습니다."));
+		}
+		return ResultData.from("S-1", "수정 가능");
+	}
+	
+	// 삭제 권한 체크
 	private ResultData actorCanDelete(int actorId, Article article) {
 		if (article == null) {
 			return ResultData.from("F-1", "게시물이 존재하지 않습니다.");
@@ -89,14 +102,4 @@ public class ArticleService {
 
 		return ResultData.from("S-1", "삭제 가능");
 	}
-	
-	public List<Article> articles() {
-		return articleRepository.getArticles();
-	}
-	
-	// 출력용
-	public List<Article> getForPrintArticles() {
-		return articleRepository.getForPrintArticles();
-	}
-	
 }

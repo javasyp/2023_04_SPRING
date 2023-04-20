@@ -43,8 +43,9 @@
 		</div>
 		<div class="btns">
 			<button class="btn-text-link" type="button" onclick="history.back();">뒤로가기</button>
-			<a class="btn-text-link" href="modify?id=${article.id }">수정</a>
-				
+			<c:if test="${article.actorCanModify }">
+				<a class="btn-text-link" href="modify?id=${article.id }">수정</a>
+			</c:if>
 			<c:if test="${article.actorCanDelete }">
 				<a class="btn-text-link" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
 					href="doDelete?id=${article.id }">삭제</a>
