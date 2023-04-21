@@ -16,18 +16,18 @@
 						<tr>
 							<td>아이디</td>
 							<td>
-								<input type="text" placeholder="아이디를 입력해주세요" name="loginId" />
+								<input type="text" autocomplete="off" placeholder="아이디를 입력해주세요" name="loginId" />
 							</td>
 						</tr>
 						<tr>
 							<td>비밀번호</td>
 							<td>
-								<input type="text" placeholder="비밀번호를 입력해주세요" name="loginPw" />
+								<input type="text" autocomplete="off" placeholder="비밀번호를 입력해주세요" name="loginPw" />
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<input type="submit" value="로그인" />
+								<button type="submit">로그인</button>
 							</td>
 						</tr>
 					</tbody>
