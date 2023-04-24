@@ -3,7 +3,6 @@ package com.KoreaIT.syp.demo.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.syp.demo.service.ArticleService;
+import com.KoreaIT.syp.demo.service.BoardService;
 import com.KoreaIT.syp.demo.util.Ut;
 import com.KoreaIT.syp.demo.vo.Article;
+import com.KoreaIT.syp.demo.vo.Board;
 import com.KoreaIT.syp.demo.vo.ResultData;
 import com.KoreaIT.syp.demo.vo.Rq;
 
@@ -21,6 +22,9 @@ import com.KoreaIT.syp.demo.vo.Rq;
 public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private BoardService boardService;
 	
 	// 액션 메서드
 	// 수정
@@ -122,9 +126,15 @@ public class UsrArticleController {
 	
 	// 목록
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model) {
+	public String showList(HttpServletRequest req, Model model, int boardId) {
+		Rq rq = (Rq) req.getAttribute("rq");
+		
+		// 게시판 도입
+		Board board = boardService.getBoardById(boardId);
+		
 		List<Article> articles = articleService.getForPrintArticles();
 		
+		model.addAttribute("board", board);
 		model.addAttribute("articles", articles);
 		
 		return "usr/article/list";

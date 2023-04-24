@@ -76,7 +76,7 @@ public class Rq {
 		return Ut.jsHistoryBack(resultCode, msg);
 	}
 
-	public String jsReplace(String resultCode, String msg) {
-		return Ut.jsReplace(resultCode, msg);
+	public String jsReplace(String msg, String uri) {
+		return Ut.jsReplace(msg, uri);
 	}
 }
