@@ -11,7 +11,7 @@ public interface BoardRepository {
 	@Select("""
 			SELECT *
 			FROM board
-			WHERE id= #{boardId}
+			WHERE id = #{boardId}
 			AND delStatus = 0;
 			""")
 	Board getBoardById(int boardId);

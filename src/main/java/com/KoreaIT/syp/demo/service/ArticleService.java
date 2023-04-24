@@ -51,8 +51,8 @@ public class ArticleService {
 	}
 	
 	// 목록 (출력용)
-	public List<Article> getForPrintArticles() {
-		return articleRepository.getForPrintArticles();
+	public List<Article> getForPrintArticles(int boardId) {
+		return articleRepository.getForPrintArticles(boardId);
 	}
 	
 	// 상세보기

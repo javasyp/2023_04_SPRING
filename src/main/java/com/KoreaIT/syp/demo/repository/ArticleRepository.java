@@ -3,6 +3,7 @@ package com.KoreaIT.syp.demo.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import com.KoreaIT.syp.demo.vo.Article;
 
@@ -13,7 +14,20 @@ public interface ArticleRepository {
 
 	public List<Article> getArticles();
 	
-	public List<Article> getForPrintArticles();
+	@Select("""
+			<script>
+			SELECT A.*, M.nickname AS extra_writer
+			FROM article AS A
+			INNER JOIN `member` AS M
+			ON A.memberId = M.id
+			WHERE 1
+			<if test="boardId != 0">
+				AND A.boardId = #{boardId}
+			</if>
+			ORDER BY A.id DESC
+			</script>
+				""")
+	public List<Article> getForPrintArticles(int boardId);
 
 	public Article getArticle(int id);
 	
