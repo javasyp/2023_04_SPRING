@@ -1,10 +1,10 @@
 package com.KoreaIT.syp.demo.controller;
 
-import org.springframework.stereotype.Controller;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -12,6 +12,7 @@ import com.KoreaIT.syp.demo.service.MemberService;
 import com.KoreaIT.syp.demo.util.Ut;
 import com.KoreaIT.syp.demo.vo.Member;
 import com.KoreaIT.syp.demo.vo.ResultData;
+import com.KoreaIT.syp.demo.vo.Rq;
 
 @Controller
 public class UsrMemberController {
@@ -27,17 +28,12 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(HttpSession session, String loginId, String loginPw) throws Exception {
+	public String doLogin(HttpServletRequest req, String loginId, String loginPw) throws Exception {
 		
-		boolean isLogined = false;
-		
-		// 중복 로그인 방지
-		if (session.getAttribute("loginedMemberId") != null) {
-			isLogined = true;
-		}
+		Rq rq = (Rq) req.getAttribute("rq");
 
-		if (isLogined) {
-			return Ut.jsHistoryBack("F-5", Ut.f("현재 로그인 상태입니다."));
+		if (rq.isLogined()) {
+			return Ut.jsHistoryBack("F-5", Ut.f("이미 로그인 상태입니다."));
 		}
 		
 		if (Ut.empty(loginId)) {
@@ -58,28 +54,23 @@ public class UsrMemberController {
 			return Ut.jsHistoryBack("F-4", "비밀번호가 일치하지 않습니다.");
 		}
 		
-		session.setAttribute("loginedMemberId", member.getId());
+		rq.login(member);
 		
-		return Ut.jsReplace(Ut.f("%s 님 환영합니다.", member.getName()), "/");
+		return Ut.jsReplace(Ut.f("%s 님 환영합니다.", member.getName()), "../home/main");
 	}
 	
 	// 로그아웃
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(HttpSession session) throws Exception {
+	public String doLogout(HttpServletRequest req) throws Exception {
 		
-		boolean isLogined = false;
-		
-		// 중복 로그아웃 방지
-		if (session.getAttribute("loginedMemberId") == null) {
-			isLogined = true;
-		}
+		Rq rq = (Rq) req.getAttribute("rq");
 
-		if (isLogined) {
-			return Ut.jsHistoryBack("F-1", Ut.f("현재 로그아웃 상태입니다."));
+		if (!rq.isLogined()) {
+			return Ut.jsHistoryBack("F-1", Ut.f("이미 로그아웃 상태입니다."));
 		}
 		
-		session.removeAttribute("loginedMemberId");
+		rq.logout();
 		
 		return Ut.jsReplace(Ut.f("로그아웃 되었습니다."), "../home/main");
 	}
