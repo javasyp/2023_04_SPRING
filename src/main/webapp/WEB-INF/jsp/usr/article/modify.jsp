@@ -17,7 +17,7 @@
 					<tbody>
 						<tr>
 							<td>번호</td>
-							<td>${article.id }</td>
+							<td><div class="badge">${article.id }</div></td>
 						</tr>
 						<tr>
 							<td>작성날짜</td>
@@ -33,11 +33,11 @@
 						</tr>
 						<tr>
 							<td>제목</td>
-							<td><input type="text" class="w-full" autocomplete="off" name="title" value="${article.title }"/></td>
+							<td><input class="input input-bordered w-full max-w-xs" type="text" autocomplete="off" name="title" value="${article.title }"/></td>
 						</tr>
 						<tr>
 							<td>내용</td>
-							<td><textarea type="text" class="w-full" autocomplete="off" name="body">${article.body }</textarea>
+							<td><textarea class="input input-bordered w-full max-w-xs" autocomplete="off" name="body">${article.body }</textarea>
 						</tr>
 						<tr>
 							<td colspan="2">
@@ -50,15 +50,7 @@
 			</form>
 		</div>
 		<div class="btns">
-			<button class="btn-text-link" type="button" onclick="history.back();">뒤로가기</button>
-			<c:if test="${article.actorCanModify }">
-				<a class="btn-text-link" href="modify?id=${article.id }">수정</a>
-			</c:if>
-			<c:if test="${article.actorCanDelete }">
-				<a class="btn-text-link" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
-					href="doDelete?id=${article.id }">삭제</a>
-			</c:if>
-			
+			<button class="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back();">뒤로가기</button>
 		</div>
 	</div>
 </section>

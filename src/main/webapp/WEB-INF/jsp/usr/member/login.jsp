@@ -16,13 +16,13 @@
 						<tr>
 							<td>아이디</td>
 							<td>
-								<input type="text" autocomplete="off" placeholder="아이디를 입력해주세요" name="loginId" />
+								<input class="input input-bordered w-full max-w-xs" type="text" autocomplete="off" placeholder="아이디를 입력해 주세요." name="loginId" />
 							</td>
 						</tr>
 						<tr>
 							<td>비밀번호</td>
 							<td>
-								<input type="text" autocomplete="off" placeholder="비밀번호를 입력해주세요" name="loginPw" />
+								<input class="input input-bordered w-full max-w-xs" type="text" autocomplete="off" placeholder="비밀번호를 입력해 주세요." name="loginPw" />
 							</td>
 						</tr>
 						<tr>
@@ -35,7 +35,7 @@
 			</form>
 		</div>
 		<div>
-			<button class="btn-text-link" type="button" onclick="history.back();">뒤로가기</button>
+			<button class="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back();">뒤로가기</button>
 		</div>
 	</div>
 </section>
