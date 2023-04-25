@@ -1,6 +1,5 @@
 package com.KoreaIT.syp.demo.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,8 @@ import com.KoreaIT.syp.demo.vo.Rq;
 public class UsrMemberController {
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private Rq rq;
 	
 	// 액션 메서드
 	// 로그인
@@ -28,9 +29,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(HttpServletRequest req, String loginId, String loginPw) throws Exception {
-		
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doLogin(String loginId, String loginPw) throws Exception {
 
 		if (rq.isLogined()) {
 			return Ut.jsHistoryBack("F-5", Ut.f("이미 로그인 상태입니다."));
@@ -62,9 +61,7 @@ public class UsrMemberController {
 	// 로그아웃
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(HttpServletRequest req) throws Exception {
-		
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doLogout() throws Exception {
 
 		if (!rq.isLogined()) {
 			return Ut.jsHistoryBack("F-1", Ut.f("이미 로그아웃 상태입니다."));

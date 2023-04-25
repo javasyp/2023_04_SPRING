@@ -9,12 +9,15 @@ import com.KoreaIT.syp.demo.repository.ArticleRepository;
 import com.KoreaIT.syp.demo.util.Ut;
 import com.KoreaIT.syp.demo.vo.Article;
 import com.KoreaIT.syp.demo.vo.ResultData;
+import com.KoreaIT.syp.demo.vo.Rq;
 
 @Service
 public class ArticleService {
 	
 	@Autowired
 	private ArticleRepository articleRepository;
+	@Autowired
+	private Rq rq;
 
 	public ArticleService(ArticleRepository articleRepository) {
 		this.articleRepository = articleRepository;

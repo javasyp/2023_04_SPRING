@@ -6,11 +6,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+
 import com.KoreaIT.syp.demo.util.Ut;
 
 import lombok.Getter;
 
 // 세션 정보를 확인하는 객체
+@Component
+@Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Rq {
 	@Getter
 	private boolean isLogined;
@@ -37,6 +43,8 @@ public class Rq {
 		
 		this.isLogined = isLogined;
 		this.loginedMemberId = loginedMemberId;
+		
+		this.req.setAttribute("rq", this);
 	}
 	
 	public void printHistoryBackJs(String msg) throws IOException {
@@ -78,5 +86,9 @@ public class Rq {
 
 	public String jsReplace(String msg, String uri) {
 		return Ut.jsReplace(msg, uri);
+	}
+	
+	public void initOnBeforeActionInterceptor() {
+
 	}
 }
