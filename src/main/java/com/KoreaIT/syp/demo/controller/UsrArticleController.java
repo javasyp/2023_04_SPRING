@@ -133,14 +133,22 @@ public class UsrArticleController {
 		if (board == null) {
 			return rq.jsHistoryBackOnView("해당 게시판은 존재하지 않습니다.");
 		}
-		
 		int articlesCount = articleService.getArticlesCount(boardId);
 		
-		int itemsInAPage = 10;
+		// 페이징
+		
+		int itemsInAPage = 10;		// 한 페이지에 나오는 글 개수
+		// 글 20개 -> 2
+		// 글 24개 -> 3
+
+		int pagesCount = (int) Math.ceil(articlesCount / (double) itemsInAPage);
 
 		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page);
 		
 		model.addAttribute("board", board);
+		model.addAttribute("boardId", boardId);
+		model.addAttribute("page", page);
+		model.addAttribute("pagesCount", pagesCount);
 		model.addAttribute("articlesCount", articlesCount);
 		model.addAttribute("articles", articles);
 		

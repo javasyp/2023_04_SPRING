@@ -25,7 +25,7 @@ public interface ArticleRepository {
 				AND A.boardId = #{boardId}
 			</if>
 			ORDER BY A.id DESC
-			<if test="limitFrom > 0">
+			<if test="limitFrom >= 0">
 				LIMIT #{limitFrom}, #{limitTake}
 			</if>
 			</script>

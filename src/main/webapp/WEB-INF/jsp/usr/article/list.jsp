@@ -36,6 +36,15 @@
 				</tbody>
 			</table>
 		</div>
+		<!-- 페이징 -->
+		<div class="pagination flex justify-center mt-3">
+			<div class="btn-group">
+				<c:forEach begin="1" end="${pagesCount }" var="i">
+					<a class="btn ${page == i ? 'btn-active' : '' }" href="?page=${i }">${i }</a>
+				</c:forEach>
+			</div>
+		</div>
+		
 	</div>
 </section>
 
