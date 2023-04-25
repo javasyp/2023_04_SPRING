@@ -15,6 +15,20 @@
 		
 					<tbody>
 						<tr>
+							<td>작성자</td>
+							<td>${rq.loginedMember.nickname }</td>
+						</tr>
+						<tr>
+							<td>게시판</td>
+							<td>
+								<select class="select w-full max-w-xs" name="boardId">
+									<option value="1">공지사항</option>
+								    <option value="2">자유</option>
+								    <option value="3">QNA</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
 							<td>제목</td>
 							<td><input class="input input-bordered w-full max-w-xs" type="text" autocomplete="off" placeholder="제목을 입력해 주세요." name="title"/></td>
 						</tr>
