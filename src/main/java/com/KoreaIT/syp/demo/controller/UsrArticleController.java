@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.syp.demo.service.ArticleService;
@@ -123,18 +124,21 @@ public class UsrArticleController {
 	
 	// 목록
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, int boardId) {
+	public String showList(Model model, @RequestParam(defaultValue="1") int boardId, 
+			@RequestParam(defaultValue="1") int page) {
 		
 		// 게시판 도입
 		Board board = boardService.getBoardById(boardId);
 		
 		if (board == null) {
-			return rq.jsHistoryBackOnView(Ut.f("%d번 게시판은 존재하지 않습니다.", boardId));
+			return rq.jsHistoryBackOnView("해당 게시판은 존재하지 않습니다.");
 		}
 		
 		int articlesCount = articleService.getArticlesCount(boardId);
 		
-		List<Article> articles = articleService.getForPrintArticles(boardId);
+		int itemsInAPage = 10;
+
+		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page);
 		
 		model.addAttribute("board", board);
 		model.addAttribute("articlesCount", articlesCount);
