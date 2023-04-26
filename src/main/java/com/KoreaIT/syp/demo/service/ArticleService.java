@@ -117,4 +117,9 @@ public class ArticleService {
 		return articleRepository.getArticlesCount(boardId, searchType, searchKeyword);
 	}
 	
+	// 게시물 조회수 증가
+	public void increaseHitCount(int id) {
+		articleRepository.increaseHitCount(id);
+	}
+	
 }

@@ -13,6 +13,7 @@
 					<col width="140" />
 					<col width="140" />
 					<col width="140" />
+					<col width="100" />
 				</colgroup>
 				<thead>
 					<tr>
@@ -20,6 +21,7 @@
 						<th>날짜</th>
 						<th>제목</th>
 						<th>작성자</th>
+						<th>조회수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -31,6 +33,7 @@
 								<a class="hover:underline" href="detail?id=${article.id }">${article.title }</a>
 							</td>
 							<td>${article.extra_writer }</td>
+							<td>${article.hitCount}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -46,7 +49,7 @@
 				
 				<!-- 변수 지정 -->
 				<c:set var="baseUri" value="?boardId=${boardId }" />
-				<c:set var="baseUri" value="${baseUri }&searchKeywordTypeCode=${searchKeywordTypeCode}" />
+				<c:set var="baseUri" value="${baseUri }&searchType=${searchType}" />
 				<c:set var="baseUri" value="${baseUri }&searchKeyword=${searchKeyword}" />
 				
 				<!-- 맨 앞으로 -->
@@ -66,7 +69,6 @@
 				
 			</div>
 		</div>
-		
 		
 	</div>
 </section>

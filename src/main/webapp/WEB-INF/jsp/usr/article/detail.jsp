@@ -30,6 +30,10 @@
 						<td>${article.extra_writer }</td>
 					</tr>
 					<tr>
+						<td>조회수</td>
+						<td>${article.hitCount }</td>
+					</tr>
+					<tr>
 						<td>제목</td>
 						<td>${article.title }</td>
 					</tr>
