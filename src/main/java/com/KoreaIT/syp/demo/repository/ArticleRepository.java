@@ -83,6 +83,7 @@ public interface ArticleRepository {
 			""")
 	public int getArticlesCount(int boardId, String searchType, String searchKeyword);
 	
+	// 조회수 증가
 	@Update("""
 			<script>
 				UPDATE article
@@ -92,5 +93,15 @@ public interface ArticleRepository {
 			""")
 
 	public int increaseHitCount(int id);
+	
+	// 조회수 값 가져오기 (ajax)
+	@Select("""
+			<script>
+				SELECT hitCount
+				FROM article
+				WHERE id = #{id}
+			</script>
+			""")
+	public int getArticleHitCount(int id);
 	
 }

@@ -1,6 +1,5 @@
 package com.KoreaIT.syp.demo.controller;
 
-import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -164,18 +163,25 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(Model model, int id) {
 		
-		// 조회수 증가 후 보여주기
-		ResultData increaseHitCountRd = articleService.increaseHitCount(id);
-		
-		// 파라미터로 조회 시 게시물 없을 때
-		if (increaseHitCountRd.isFail()) {
-			return rq.jsHistoryBackOnView(increaseHitCountRd.getMsg());
-		}
-		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
 		model.addAttribute("article", article);
 		
 		return "usr/article/detail";
+	}
+	
+	@RequestMapping("/usr/article/doIncreaseHitCountRd")
+	@ResponseBody
+	public ResultData doIncreaseHitCountRd(int id) {
+		
+		// 조회수 증가 후 보여주기
+		ResultData increaseHitCountRd = articleService.increaseHitCount(id);
+		
+		// 파라미터로 조회 시 게시물 없을 때
+		if (increaseHitCountRd.isFail()) {
+			return increaseHitCountRd;
+		}
+		
+		return ResultData.newData(increaseHitCountRd, "hitCount", articleService.getArticleHitCount(id));
 	}
 }

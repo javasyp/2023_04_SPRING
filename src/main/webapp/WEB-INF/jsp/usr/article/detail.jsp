@@ -4,6 +4,31 @@
 <%@ include file="../common/head.jspf"%>
 <hr />
 
+<!-- 조회수 증가 ajax 통신으로 보여주기 -->
+<!-- <iframe src="http://localhost:8081/usr/article/doIncreaseHitCountRd?id=2" frameborder="0"></iframe> -->
+<script>
+	const params = {}
+	params.id = parseInt('${param.id}');
+</script>
+
+<script>
+	// AJAX
+	function ArticleDetail__increaseHitCount() {
+		$.get('../article/doIncreaseHitCountRd', {
+			id : params.id,
+			ajaxMode : 'Y'
+		}, function(data) {
+			$('.article-detail__hit-count').empty().html(data.data1);
+		}, 'json');
+	}
+	$(function() {
+		// 실전코드
+		// 		ArticleDetail__increaseHitCount();
+		// 연습코드
+		setTimeout(ArticleDetail__increaseHitCount, 2000);
+	})
+</script>
+
 <section class="mt-8 text-xl">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
@@ -31,7 +56,9 @@
 					</tr>
 					<tr>
 						<td>조회수</td>
-						<td>${article.hitCount }</td>
+						<td>
+							<span class="article-detail__hit-count">${article.hitCount }</span>
+						</td>
 					</tr>
 					<tr>
 						<td>제목</td>

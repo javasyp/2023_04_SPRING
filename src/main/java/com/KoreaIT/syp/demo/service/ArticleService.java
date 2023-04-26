@@ -117,7 +117,7 @@ public class ArticleService {
 		return articleRepository.getArticlesCount(boardId, searchType, searchKeyword);
 	}
 	
-	// 게시물 조회수 증가
+	// 게시물 조회수 증가시키기
 	public ResultData increaseHitCount(int id) {
 		int affectedRow = articleRepository.increaseHitCount(id);
 
@@ -126,6 +126,11 @@ public class ArticleService {
 		}
 
 		return ResultData.from("S-1", "조회수 증가", "affectedRowRd", affectedRow);
+	}
+	
+	// 조회수 값 가져오기
+	public int getArticleHitCount(int id) {
+		return articleRepository.getArticleHitCount(id);
 	}
 	
 }
