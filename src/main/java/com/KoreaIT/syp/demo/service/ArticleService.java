@@ -54,14 +54,14 @@ public class ArticleService {
 	}
 	
 	// 목록 (출력용)
-	public List<Article> getForPrintArticles(int boardId, int itemsInAPage, int page) {
+	public List<Article> getForPrintArticles(int boardId, int itemsInAPage, int page, String searchType, String searchKeyword) {
 		/*
 		 * SELECT * FROM article WHERE boardId = 1 ORDER BY id DESC LIMIT 0, 10
 		 */
 		int limitFrom = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
 		
-		return articleRepository.getForPrintArticles(boardId, limitFrom, limitTake);
+		return articleRepository.getForPrintArticles(boardId, limitFrom, limitTake, searchType, searchKeyword);
 	}
 	
 	// 상세보기
