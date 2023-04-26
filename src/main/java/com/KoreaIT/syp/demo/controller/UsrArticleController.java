@@ -162,12 +162,17 @@ public class UsrArticleController {
 	
 	// 상세보기
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(HttpServletRequest req, Model model, int id) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String showDetail(Model model, int id) {
+		
+		// 조회수 증가 후 보여주기
+		ResultData increaseHitCountRd = articleService.increaseHitCount(id);
+		
+		// 파라미터로 조회 시 게시물 없을 때
+		if (increaseHitCountRd.isFail()) {
+			return rq.jsHistoryBackOnView(increaseHitCountRd.getMsg());
+		}
 		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
-		
-		articleService.increaseHitCount(id);
 		
 		model.addAttribute("article", article);
 		
