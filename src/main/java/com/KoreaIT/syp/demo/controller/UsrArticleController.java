@@ -1,5 +1,6 @@
 package com.KoreaIT.syp.demo.controller;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -125,7 +126,8 @@ public class UsrArticleController {
 	// 목록
 	@RequestMapping("/usr/article/list")
 	public String showList(Model model, @RequestParam(defaultValue="1") int boardId, 
-			@RequestParam(defaultValue="1") int page) {
+			@RequestParam(defaultValue="1") int page, @RequestParam(defaultValue = "title,body") String searchType,
+			@RequestParam(defaultValue = "") String searchKeyword) {
 		
 		// 게시판 도입
 		Board board = boardService.getBoardById(boardId);
@@ -133,7 +135,8 @@ public class UsrArticleController {
 		if (board == null) {
 			return rq.jsHistoryBackOnView("해당 게시판은 존재하지 않습니다.");
 		}
-		int articlesCount = articleService.getArticlesCount(boardId);
+		
+		int articlesCount = articleService.getArticlesCount(boardId, searchType, searchKeyword);
 		
 		// 페이징
 		
