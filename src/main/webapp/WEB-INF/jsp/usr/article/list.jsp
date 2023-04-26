@@ -6,7 +6,23 @@
 <section class="mt-8 text-xl">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
-			<div>${articlesCount } 개</div>
+			<div class="flex mb-4">
+				<div>게시물 개수 : ${articlesCount } 개</div>
+				<div class="flex-grow"></div>
+				<!-- 검색 -->
+				<form action="">
+					<input type="hidden" name="boardId" value="${param.boardId }" />
+					<select class="select select-ghost" name="searchType">
+						<option value="title">제목</option>
+					    <option value="body">내용</option>
+					    <option value="title,body">제목 + 내용</option>
+					</select>
+					<input value="${param.searchKeyword }" maxlength="20" name="searchKeyword"
+						class="input input-bordered" type="text" placeholder="검색어를 입력해 주세요.">
+					<button class="btn btn-ghost" type="submit">검색</button>
+				</form>
+			</div>
+			<!-- 목록 -->
 			<table class="table table-zebra w-full">
 				<colgroup>
 					<col width="70" />
