@@ -11,6 +11,10 @@ public class ResultData<DT> {			// 제네릭 추가
 	private DT data1;
 	@Getter
 	private String data1Name;
+	@Getter
+	private Object data2;
+	@Getter
+	private String data2Name;
 	
 	// data1(article) 없을 때, 오버로딩
 	public static <DT> ResultData<DT> from(String resultCode, String msg) {
@@ -40,5 +44,11 @@ public class ResultData<DT> {			// 제네릭 추가
 	
 	public static <DT> ResultData<DT> newData(ResultData rd, String data1Name, DT newData) {
 		return from(rd.getResultCode(), rd.getMsg(), data1Name, newData);
+	}
+
+	// 더 많은 정보를 보여주기 위함
+	public void setData2(String data2Name, Object data2) {
+		this.data2Name = data2Name;
+		this.data2 = data2;
 	}
 }
