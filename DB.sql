@@ -134,9 +134,72 @@ UPDATE article
 SET boardId = 2
 WHERE id = 3;
 
+# 게시판 테이블 구조 변경 - hitCount 추가
 ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL;
 
+# reactionPoint 테이블 생성
+CREATE TABLE reactionPoint (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터  타입 코드',
+    relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
+    `point` INT(10) NOT NULL
+);
+
+# reactionPoint 테스트 데이터
+# 1번 회원이 1번 글에 '싫어요'
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = '1',
+`point` = -1;
+
+# 1번 회원이 2번 글에 '좋아요'
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 2,
+`point` = 1;
+
+# 2번 회원이 1번 글에 '싫어요'
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 1,
+`point` = -1;
+
+# 2번 회원이 2번 글에 '싫어요'
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 2,
+`point` = -1;
+
+# 3번 회원이 1번 글에 '좋아요'
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 1,
+`point` = 1;
+
 ###################################################################
+
+SELECT * FROM article;
+SELECT * FROM `member`;
+SELECT * FROM board;
+SELECT * FROM reactionPoint;
 
 UPDATE article
 SET `body` = '내용4'
@@ -159,10 +222,6 @@ FROM article;
 SELECT COUNT(*) FROM article;
 
 DESC article;
-
-SELECT * FROM article;
-SELECT * FROM `member`;
-SELECT * FROM board;
 
 SELECT COUNT(*) AS cnt
 FROM article AS A
