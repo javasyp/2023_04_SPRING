@@ -239,3 +239,45 @@ DESC `member`;
 SELECT LAST_INSERT_ID();
 
 SELECT CONCAT('%' 'abc' '%');
+
+# left join
+## 둘다 inner join 사용할 경우 교집합만 나오기 때문에 left join 사용
+SELECT A.*, M.nickname, RP.point
+FROM article AS A
+INNER JOIN `member` AS M 
+ON A.memberId = M.id
+LEFT JOIN reactionPoint AS RP 
+ON A.id = RP.relId AND RP.relTypeCode = 'article'
+GROUP BY A.id
+ORDER BY A.id DESC;
+
+# 서브쿼리 버전
+SELECT A.*, 
+IFNULL(SUM(RP.point),0) AS extra_sumReactionPoint,
+IFNULL(SUM(IF(RP.point > 0, RP.point, 0)),0) AS extra_goodReactionPoint,
+IFNULL(SUM(IF(RP.point < 0, RP.point, 0)),0) AS extra_badReactionPoint
+FROM (
+	SELECT A.*, M.nickname AS extra_writerName
+	FROM article AS A
+	LEFT JOIN `member` AS M
+	ON A.memberId = M.id 
+			) AS A
+LEFT JOIN reactionPoint AS RP
+ON RP.relTypeCode = 'article'
+AND A.id = RP.relId
+GROUP BY A.id
+ORDER BY id DESC;
+
+# join 버전
+SELECT A.*,
+IFNULL(SUM(RP.point),0) AS extra__sumReactionPoint,
+IFNULL(SUM(IF(RP.point > 0,RP.point,0)),0) AS extra__goodReactionPoint,
+IFNULL(SUM(IF(RP.point < 0,RP.point,0)),0) AS extra__badReactionPoint,
+M.nickname
+FROM article AS A
+INNER JOIN `member` AS M 
+ON A.memberId = M.id
+LEFT JOIN reactionPoint AS RP 
+ON A.id = RP.relId AND RP.relTypeCode = 'article'
+GROUP BY A.id
+ORDER BY A.id DESC;
