@@ -56,6 +56,21 @@ public interface ArticleRepository {
 
 	public Article getArticle(int id);
 	
+	@Select("""
+			<script>
+			SELECT A.*, M.nickname AS extra_writer,
+			IFNULL(SUM(RP.point),0) AS extra_sumReactionPoint,
+			IFNULL(SUM(IF(RP.point &gt; 0,RP.point,0)),0) AS extra_goodReactionPoint,
+			IFNULL(SUM(IF(RP.point &lt; 0,RP.point,0)),0) AS extra_badReactionPoint
+			FROM article AS A
+			INNER JOIN `member` AS M
+			ON A.memberId = M.id
+			LEFT JOIN reactionPoint AS RP 
+			ON A.id = RP.relId AND RP.relTypeCode = 'article'
+			WHERE A.id = #{id}
+			GROUP BY A.id
+			</script>
+			""")
 	public Article getForPrintArticle(int id);
 
 	public void deleteArticle(int id);
