@@ -16,7 +16,13 @@ public class Article {
 	private String body;
 	private int hitCount;
 	
+	// member 테이블의 nickname
 	private String extra_writer;
+	
+	// reactionPoint 테이블의 `point`
+	private int extra_sumReactionPoint;		// 합계
+	private int extra_goodReactionPoint;	// 좋아요 수
+	private int extra_badReactionPoint;		// 싫어요 수
 	
 	// 수정 및 삭제 권한
 	private boolean actorCanDelete;

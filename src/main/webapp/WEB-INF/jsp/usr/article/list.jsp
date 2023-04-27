@@ -30,6 +30,7 @@
 					<col width="140" />
 					<col width="140" />
 					<col width="100" />
+					<col width="140" />
 				</colgroup>
 				<thead>
 					<tr>
@@ -38,6 +39,7 @@
 						<th>제목</th>
 						<th>작성자</th>
 						<th>조회수</th>
+						<th>추천</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -49,7 +51,8 @@
 								<a class="hover:underline" href="detail?id=${article.id }">${article.title }</a>
 							</td>
 							<td>${article.extra_writer }</td>
-							<td>${article.hitCount}</td>
+							<td>${article.hitCount }</td>
+							<td>${article.extra_goodReactionPoint }</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -60,13 +63,13 @@
 			<div class="btn-group">
 			
 				<c:set var="paginationLen" value="4" />
-				<c:set var="startPage" value="${page - paginationLen >= 1 ? page - paginationLen : 1}" />
-				<c:set var="endPage" value="${page + paginationLen <= pagesCount ? page + paginationLen : pagesCount}" />
+				<c:set var="startPage" value="${page - paginationLen >= 1 ? page - paginationLen : 1 }" />
+				<c:set var="endPage" value="${page + paginationLen <= pagesCount ? page + paginationLen : pagesCount }" />
 				
 				<!-- 변수 지정 -->
 				<c:set var="baseUri" value="?boardId=${boardId }" />
-				<c:set var="baseUri" value="${baseUri }&searchType=${searchType}" />
-				<c:set var="baseUri" value="${baseUri }&searchKeyword=${searchKeyword}" />
+				<c:set var="baseUri" value="${baseUri }&searchType=${searchType }" />
+				<c:set var="baseUri" value="${baseUri }&searchKeyword=${searchKeyword }" />
 				
 				<!-- 맨 앞으로 -->
 				<c:if test="${startPage > 1 }">
