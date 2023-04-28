@@ -63,16 +63,10 @@
 							싫어요 <span class="badge">${article.badReactionPoint }</span>
 							<c:if test="${actorCanMakeReaction }">
 								<div>
-									<span>
-										<span>&nbsp;</span>
-										<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}"
-											class="btn btn-xs">LIKE 👍</a>
-									</span>
-									<span>
-										<span>&nbsp;</span>
-										<a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}"
-											class="btn btn-xs">DISLIKE 👎</a>
-									</span>
+									<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri}"
+										class="btn btn-xs">LIKE 👍</a>
+									<a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri}"
+										class="btn btn-xs">DISLIKE 👎</a>
 								</div>
 							</c:if>
 						</td>
