@@ -36,24 +36,6 @@
 	})
 </script>
 
-<script>
-	function ArticleDetail__increaseLikeCount() {
-		
-		$.get('../reaction/doIncreaseLikeCountRd', {
-			relId : params.id,
-			memberId : params.memberId,
-			ajaxMode : 'Y'
-		}, function(data) {
-			$('.likeCount').html(data.data1);
-		}, 'json');
-	}
-	
-	$(function() {
-		setTimeout(ArticleDetail__increaseLikeCount, 2000);
-	})
-		
-</script>
-
 <section class="mt-8 text-xl">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
@@ -76,24 +58,6 @@
 						<td>${article.updateDate }</td>
 					</tr>
 					<tr>
-						<td>작성자</td>
-						<td>${article.extra_writer }</td>
-					</tr>
-					<tr>
-						<td>조회수</td>
-						<td>
-							<span class="article-detail__hit-count">${article.hitCount }</span>
-						</td>
-					</tr>
-					<tr>
-						<td>제목</td>
-						<td>${article.title }</td>
-					</tr>
-					<tr>
-						<td>내용</td>
-						<td>${article.body }</td>
-					</tr>
-					<tr>
 						<td>추천</td>
 						<td>
 							<span>&nbsp;좋아요 : ${article.goodReactionPoint }&nbsp;</span>
@@ -110,6 +74,24 @@
 									</span>
 								</div>
 							</c:if>
+						</td>
+					</tr>
+					<tr>
+						<td>작성자</td>
+						<td>${article.extra_writer }</td>
+					</tr>
+					<tr>
+						<td>제목</td>
+						<td>${article.title }</td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td>${article.body }</td>
+					</tr>
+					<tr>
+						<td>조회수</td>
+						<td>
+							<span class="article-detail__hit-count">${article.hitCount }</span>
 						</td>
 					</tr>
 				</tbody>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.syp.demo.service.ArticleService;
 import com.KoreaIT.syp.demo.service.BoardService;
+import com.KoreaIT.syp.demo.service.ReactionPointService;
 import com.KoreaIT.syp.demo.util.Ut;
 import com.KoreaIT.syp.demo.vo.Article;
 import com.KoreaIT.syp.demo.vo.Board;
@@ -27,6 +28,8 @@ public class UsrArticleController {
 	private BoardService boardService;
 	@Autowired
 	private Rq rq;
+	@Autowired
+	private ReactionPointService reactionPointService;
 	
 	// 액션 메서드
 	// 수정
@@ -166,7 +169,7 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
 		// 추천 여부 확인
-		boolean actorCanMakeReaction = articleService.actorCanMakeReaction(rq.getLoginedMemberId(), id);
+		boolean actorCanMakeReaction = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
 		
 		model.addAttribute("article", article);
 		model.addAttribute("actorCanMakeReaction", actorCanMakeReaction);
