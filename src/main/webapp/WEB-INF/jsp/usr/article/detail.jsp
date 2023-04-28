@@ -9,6 +9,7 @@
 <script>
 	const params = {}
 	params.id = parseInt('${param.id}');
+	params.memberId = parseInt('${param.loginedMemberId}');
 </script>
 
 <script>
@@ -29,12 +30,28 @@
 			$('.article-detail__hit-count').empty().html(data.data1);
 		}, 'json');
 	}
+         
 	$(function() {
-		// 실전코드
-		// 		ArticleDetail__increaseHitCount();
-		// 연습코드
 		setTimeout(ArticleDetail__increaseHitCount, 2000);
 	})
+</script>
+
+<script>
+	function ArticleDetail__increaseLikeCount() {
+		
+		$.get('../reaction/doIncreaseLikeCountRd', {
+			relId : params.id,
+			memberId : params.memberId,
+			ajaxMode : 'Y'
+		}, function(data) {
+			$('.likeCount').html(data.data1);
+		}, 'json');
+	}
+	
+	$(function() {
+		setTimeout(ArticleDetail__increaseLikeCount, 2000);
+	})
+		
 </script>
 
 <section class="mt-8 text-xl">
@@ -77,16 +94,20 @@
 						<td>${article.body }</td>
 					</tr>
 					<tr>
-						<td>좋아요</td>
-						<td>${article.extra_goodReactionPoint }</td>
-					</tr>
-					<tr>
-						<td>싫어요</td>
-						<td>${article.extra_badReactionPoint }</td>
-					</tr>
-					<tr>
-						<td>추천 총합</td>
-						<td>${article.extra_sumReactionPoint }</td>
+						<td>추천</td>
+						<td>
+							<span>좋아요 : ${article.extra_goodReactionPoint }</span>
+							<c:if test="${actorCanMakeReaction }">
+								<span>
+									<span>&nbsp;</span>
+									<button>👍</button>
+								</span>
+								<span>
+									<span>&nbsp;</span>
+									<button>👎</button>
+								</span>
+							</c:if>
+						</td>
 					</tr>
 				</tbody>
 	

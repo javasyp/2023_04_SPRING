@@ -133,4 +133,9 @@ public class ArticleService {
 		return articleRepository.getArticleHitCount(id);
 	}
 	
+	// 추천 여부 확인 (0이면 추천한 적 없음)
+	public boolean actorCanMakeReaction(int actorId, int id) {
+		return articleRepository.getSumReactionPointByMemberId(actorId, id) == 0;
+	}
+	
 }
