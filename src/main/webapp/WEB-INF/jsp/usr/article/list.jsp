@@ -32,7 +32,6 @@
 					<col width="100" />
 					<col width="100" />
 					<col width="100" />
-					<col width="100" />
 				</colgroup>
 				<thead>
 					<tr>
@@ -43,7 +42,6 @@
 						<th>조회수</th>
 						<th>좋아요</th>
 						<th>싫어요</th>
-						<th>추천</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -56,9 +54,8 @@
 							</td>
 							<td>${article.extra_writer }</td>
 							<td>${article.hitCount }</td>
-							<td>${article.extra_goodReactionPoint }</td>
-							<td>${article.extra_badReactionPoint }</td>
-							<td>${article.extra_sumReactionPoint }</td>
+							<td>${article.goodReactionPoint}</td>
+							<td>${article.badReactionPoint}</td>
 						</tr>
 					</c:forEach>
 				</tbody>

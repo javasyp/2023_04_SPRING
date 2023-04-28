@@ -96,16 +96,19 @@
 					<tr>
 						<td>추천</td>
 						<td>
-							<span>좋아요 : ${article.extra_goodReactionPoint }</span>
+							<span>&nbsp;좋아요 : ${article.goodReactionPoint }&nbsp;</span>
+							<span>&nbsp;싫어요 : ${article.badReactionPoint }&nbsp;</span>
 							<c:if test="${actorCanMakeReaction }">
-								<span>
-									<span>&nbsp;</span>
-									<button>👍</button>
-								</span>
-								<span>
-									<span>&nbsp;</span>
-									<button>👎</button>
-								</span>
+								<div>
+									<span>
+										<span>&nbsp;</span>
+										<button>👍</button>
+									</span>
+									<span>
+										<span>&nbsp;</span>
+										<button>👎</button>
+									</span>
+								</div>
 							</c:if>
 						</td>
 					</tr>
