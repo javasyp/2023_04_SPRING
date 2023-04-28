@@ -94,6 +94,25 @@ public class Rq {
 		return Ut.jsReplace(msg, uri);
 	}
 	
+	// 현재 URI 가져오기
+	public String getCurrentUri() {
+		String currentUri = req.getRequestURI();
+		String queryString = req.getQueryString();
+		
+		System.out.println(currentUri);
+		System.out.println(queryString);
+		
+		if (queryString != null && queryString.length() > 0) {
+			currentUri += "?" + queryString;
+		}
+
+		System.out.println(currentUri);
+		return currentUri;
+
+	}
+
+	// Rq 객체 생성 유도
+	// 삭제 x, BeforeActionInterceptor 에서 강제 호출
 	public void initOnBeforeActionInterceptor() {
 
 	}

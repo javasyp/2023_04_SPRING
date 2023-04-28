@@ -9,7 +9,6 @@
 <script>
 	const params = {}
 	params.id = parseInt('${param.id}');
-	params.memberId = parseInt('${param.loginedMemberId}');
 </script>
 
 <script>
@@ -60,17 +59,19 @@
 					<tr>
 						<td>추천</td>
 						<td>
-							<span>&nbsp;좋아요 : ${article.goodReactionPoint }&nbsp;</span>
-							<span>&nbsp;싫어요 : ${article.badReactionPoint }&nbsp;</span>
+							좋아요 <span class="badge">${article.goodReactionPoint }</span>
+							싫어요 <span class="badge">${article.badReactionPoint }</span>
 							<c:if test="${actorCanMakeReaction }">
 								<div>
 									<span>
 										<span>&nbsp;</span>
-										<button>👍</button>
+										<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}"
+											class="btn btn-xs">LIKE 👍</a>
 									</span>
 									<span>
 										<span>&nbsp;</span>
-										<button>👎</button>
+										<a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}"
+											class="btn btn-xs">DISLIKE 👎</a>
 									</span>
 								</div>
 							</c:if>
@@ -81,18 +82,18 @@
 						<td>${article.extra_writer }</td>
 					</tr>
 					<tr>
+						<td>조회수</td>
+						<td>
+							<span class="article-detail__hit-count">${article.hitCount }</span>
+						</td>
+					</tr>
+					<tr>
 						<td>제목</td>
 						<td>${article.title }</td>
 					</tr>
 					<tr>
 						<td>내용</td>
 						<td>${article.body }</td>
-					</tr>
-					<tr>
-						<td>조회수</td>
-						<td>
-							<span class="article-detail__hit-count">${article.hitCount }</span>
-						</td>
 					</tr>
 				</tbody>
 	

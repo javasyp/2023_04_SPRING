@@ -132,4 +132,26 @@ public class ArticleService {
 	public int getArticleHitCount(int id) {
 		return articleRepository.getArticleHitCount(id);
 	}
+	
+	// "좋아요" 클릭 시 article 테이블의 "좋아요" 개수 업데이트
+	public ResultData increaseGoodReationPoint(int relId) {
+		
+		int affectedRow = articleRepository.increaseGoodReationPoint(relId);
+
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "해당 게시물은 없습니다.", "affectedRow", affectedRow);
+		}
+		return ResultData.from("S-1", "'좋아요' 증가", "affectedRow", affectedRow);
+	}
+	
+	// "싫어요" 클릭 시 article 테이블의 "싫어요" 개수 업데이트
+	public ResultData increaseBadReationPoint(int relId) {
+
+		int affectedRow = articleRepository.increaseBadReationPoint(relId);
+
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "해당 게시물은 없습니다.", "affectedRow", affectedRow);
+		}
+		return ResultData.from("S-1", "'싫어요' 증가", "affectedRow", affectedRow);
+	}
 }
