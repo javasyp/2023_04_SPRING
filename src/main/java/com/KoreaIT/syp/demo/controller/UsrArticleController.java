@@ -169,10 +169,25 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
 		// 추천 여부 확인
-		boolean actorCanMakeReaction = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
+		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
 		
 		model.addAttribute("article", article);
-		model.addAttribute("actorCanMakeReaction", actorCanMakeReaction);
+		model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
+		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
+		
+		// 추천 불가 시
+		if (actorCanMakeReactionRd.getResultCode().equals("F-2")) {
+			// 로그인 된 회원 번호의 추천 point 가져옴
+			int sumReactionPointByMemberId = (int) actorCanMakeReactionRd.getData1();
+			
+			if (sumReactionPointByMemberId > 0) {
+				// 로그인 한 회원이 "좋아요"를 이미 누른 상태라면 "좋아요 취소" 보여주기
+				model.addAttribute("actorCanCancelGoodReaction", true);
+			} else {
+				// 로그인 한 회원이 "싫어요"를 이미 누른 상태라면 "싫어요 취소" 보여주기
+				model.addAttribute("actorCanCancelBadReaction", true);
+			}
+		}
 		
 		return "usr/article/detail";
 	}

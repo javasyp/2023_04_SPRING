@@ -22,7 +22,7 @@ public class UsrReactionPointController {
 	public String doGoodReaction(String relTypeCode, int relId, String replaceUri) {
 		
 		boolean actorCanMakeReaction = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), relTypeCode,
-				relId);
+				relId).isSuccess();
 		
 		if (actorCanMakeReaction == false) {
 			return rq.jsHistoryBack("F-1", "이미 좋아요를 눌렀습니다.");
@@ -42,7 +42,7 @@ public class UsrReactionPointController {
 	public String doBadReaction(String relTypeCode, int relId, String replaceUri) {
 		
 		boolean actorCanMakeReaction = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), relTypeCode,
-				relId);
+				relId).isSuccess();
 		
 		if (actorCanMakeReaction == false) {
 			return rq.jsHistoryBack("F-1", "이미 싫어요를 눌렀습니다.");

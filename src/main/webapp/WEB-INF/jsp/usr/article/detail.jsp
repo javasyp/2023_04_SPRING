@@ -69,6 +69,27 @@
 										class="btn btn-xs">DISLIKE 👎</a>
 								</div>
 							</c:if>
+							
+							<!-- "좋아요" 취소 -->
+							<c:if test="${actorCanCancelGoodReaction }">
+								<div>
+									<a href="/usr/reactionPoint/doCancelGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri}"
+										class="btn btn-xs">LIKE 👍</a>
+									<a onclick="alert(this.title); return false;" title="좋아요를 먼저 취소하세요."
+										class="btn btn-xs">DISLIKE 👎</a>
+								</div>
+							</c:if>
+							
+							<!-- "싫어요" 취소 -->
+							<c:if test="${actorCanCancelBadReaction }">
+								<div>
+									<a onclick="alert(this.title); return false;" title="싫어요를 먼저 취소하세요." 
+										class="btn btn-xs">LIKE 👍</a>
+									<a href="/usr/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri}"
+										class="btn btn-xs">DISLIKE 👎</a>
+								</div>
+							</c:if>
+							
 						</td>
 					</tr>
 					<tr>

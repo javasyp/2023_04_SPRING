@@ -20,14 +20,21 @@ public class ReactionPointService {
 	
 	// 서비스 메서드
 	// 추천 여부 확인
-	public boolean actorCanMakeReaction(int actorId, String relTypeCode, int relId) {
+	public ResultData actorCanMakeReaction(int actorId, String relTypeCode, int relId) {
 		
 		if (actorId == 0) {
-			return false;
+			return ResultData.from("F-1", "로그인 후 이용해 주세요.");
 		}
 		
 		// 0이면 추천한 적 없음.
-		return reactionPointRepository.getSumReactionPointByMemberId(actorId, relTypeCode, relId) == 0;
+		int sumReactionPointByMemberId = reactionPointRepository.getSumReactionPointByMemberId(actorId, relTypeCode,
+				relId);
+
+		if (sumReactionPointByMemberId != 0) {
+			return ResultData.from("F-2", "추천 불가", "sumReactionPointByMemberId", sumReactionPointByMemberId);
+		}
+		
+		return ResultData.from("S-1", "추천 가능", "sumReactionPointByMemberId", sumReactionPointByMemberId);
 	}
 	
 	public ResultData addGoodReactionPoint(int actorId, String relTypeCode, int relId) {
