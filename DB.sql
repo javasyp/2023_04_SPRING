@@ -194,12 +194,50 @@ relTypeCode = 'article',
 relId = 1,
 `point` = 1;
 
+# 게시물 테이블에 추천 관련 컬럼 추가
+ALTER TABLE article ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL;
+ALTER TABLE article ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL;
+
+# 기존 게시물의 good,bad ReactionPoint 필드의 값을 채우기
+UPDATE article AS A
+INNER JOIN (
+    SELECT RP.relTypeCode, RP.relId,
+    SUM(IF(RP.point > 0, RP.point,0)) AS goodReactionPoint,
+    SUM(IF(RP.point < 0, RP.point * -1,0)) AS badReactionPoint
+    FROM reactionPoint AS RP
+    GROUP BY RP.relTypeCode, RP.relId
+) AS RP_SUM
+ON A.id = RP_SUM.relId
+SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
+A.badReactionPoint = RP_SUM.badReactionPoint;
+
 ###################################################################
 
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
+
+SELECT *
+FROM reactionPoint AS RP
+GROUP BY RP.relTypeCode, RP.relId;
+
+SELECT IF(RP.point > 0, '큼','작음')
+FROM reactionPoint AS RP
+GROUP BY RP.relTypeCode, RP.relId;
+
+# 각 게시물 별 좋아요, 싫어요의 개수
+SELECT RP.relTypeCode, RP.relId,
+SUM(IF(RP.point > 0, RP.point,0)) AS goodReactionPoint,
+SUM(IF(RP.point < 0, RP.point * -1,0)) AS badReactionPoint
+FROM reactionPoint AS RP
+GROUP BY RP.relTypeCode, RP.relId;
+
+SELECT IFNULL(SUM(RP.point),0)
+FROM reactionPoint AS RP
+WHERE RP.relTypeCode = 'article'
+AND RP.relId = 3
+AND RP.memberId = 2
 
 UPDATE article
 SET `body` = '내용4'
