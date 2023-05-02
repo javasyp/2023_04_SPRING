@@ -134,5 +134,25 @@ public interface ArticleRepository {
 			</script>
 			""")
 	public int increaseBadReationPoint(int relId);
+	
+	// "좋아요" 개수 감소
+	@Update("""
+			<script>
+				UPDATE article
+				SET goodReactionPoint = goodReactionPoint - 1
+				WHERE id = #{relId}
+			</script>
+			""")
+	public int decreaseGoodReationPoint(int relId);
+	
+	// "싫어요" 개수 감소
+	@Update("""
+			<script>
+				UPDATE article
+				SET badReactionPoint = badReactionPoint - 1
+				WHERE id = #{relId}
+			</script>
+			""")
+	public int decreaseBadReationPoint(int relId);
 
 }

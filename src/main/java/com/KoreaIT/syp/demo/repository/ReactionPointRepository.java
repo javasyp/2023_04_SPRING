@@ -1,5 +1,6 @@
 package com.KoreaIT.syp.demo.repository;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -44,6 +45,28 @@ public interface ReactionPointRepository {
 				`point` = -1
 			</script>
 			""")
-	public void addBadReactionPoint(int actorId, String relTypeCode, int relId);
+	public int addBadReactionPoint(int actorId, String relTypeCode, int relId);
+	
+	// 좋아요 취소
+	@Delete("""
+			<script>
+				DELETE FROM reactionPoint
+				WHERE relTypeCode = #{relTypeCode}
+				AND relId = #{relId}
+				AND memberId = #{actorId}
+			</script>
+			""")
+	public void deleteGoodReactionPoint(int actorId, String relTypeCode, int relId);
+	
+	// 싫어요 취소
+	@Delete("""
+			<script>
+				DELETE FROM reactionPoint
+				WHERE relTypeCode = #{relTypeCode}
+				AND relId = #{relId}
+				AND memberId = #{actorId}
+			</script>
+			""")
+	public void deleteBadReactionPoint(int actorId, String relTypeCode, int relId);
 	
 }
